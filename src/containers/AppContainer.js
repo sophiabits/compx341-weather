@@ -4,6 +4,7 @@ import QueryInput from '../components/QueryInput';
 import Weather from '../components/Weather';
 
 import useWeather from '../lib/useWeather';
+import validateCityName from '../lib/validateCityName';
 
 function AppContainer(props) {
     const weather = useWeather({
@@ -15,7 +16,12 @@ function AppContainer(props) {
         <div>
             <div className="row mt-4">
                 <div className="col-sm-4"></div>
-                <QueryInput disabled={loading} placeholder="City name (e.g. Hamilton)" onChange={weather.search} />
+                <QueryInput
+                    disabled={loading}
+                    placeholder="City name (e.g. Hamilton)"
+                    validator={validateCityName}
+                    onChange={weather.search}
+                />
                 <div className="col-sm-4"></div>
             </div>
             <div className="row mt-4">

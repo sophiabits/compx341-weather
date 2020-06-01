@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
@@ -34,7 +35,10 @@ function QueryInput(props) {
                         aria-label="Search"
                         autoCorrect="off"
                         autoFocus
-                        className="form-control form-control-lg"
+                        className={cx(
+                            'form-control form-control-lg',
+                            validationError !== null && 'is-invalid'
+                        )}
                         disabled={props.disabled}
                         id="usr"
                         placeholder={props.placeholder}
