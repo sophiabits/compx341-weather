@@ -33,6 +33,7 @@ function QueryInput(props) {
                         autoCorrect="off"
                         autoFocus
                         className="form-control form-control-lg"
+                        disabled={props.disabled}
                         id="usr"
                         placeholder={props.placeholder}
                         spellCheck={false}
@@ -53,6 +54,7 @@ function QueryInput(props) {
 }
 
 QueryInput.propTypes = {
+    disabled: PropTypes.bool,
     placeholder: PropTypes.string,
     validator: PropTypes.func,
     onChange: PropTypes.func.isRequired,
