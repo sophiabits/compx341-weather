@@ -1,59 +1,70 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-function ZipResponse(props) {
+function Weather(props) {
+    const { data, error, clearResponse } = props;
 
-    if(props.responseData === null || props.responseData === '') {
-        return null;
-    }
-
-    if(props.responseData.cod === '400' || props.responseData.cod === '404') {
-        setTimeout(function() { props.clearResponse();}, 20000);
+    if (error !== null) {
+        setTimeout(clearResponse, 20000);
         return (
             <div className="col-sm-8">
-                <div className="text-danger">{ props.responseData.message }</div>
+                <div className="text-danger">{error}</div>
             </div>
         );
-    }
-
-    if(props.responseData.cod === 200) {
+    } else if (data !== null) {
         return (
             <div className="col-sm-8">
                 <table className="table table-info table-hover">
                     <tbody>
                         <tr>
                             <td>City</td>
-                            <td>{props.responseData.name}</td>
+                            <td>{data.name}</td>
                         </tr>
                         <tr>
                             <td>Temperature</td>
-                            <td>{props.responseData.main.temp}</td>
+                            <td>{data.temp}</td>
                         </tr>
                         <tr>
                             <td>Pressure</td>
-                            <td>{props.responseData.main.pressure}</td>
+                            <td>{data.pressure}</td>
                         </tr>
                         <tr>
                             <td>Humidity</td>
-                            <td>{props.responseData.main.humidity}</td>
+                            <td>{data.humidity}</td>
                         </tr>
                         <tr>
                             <td>Temperature (Min)</td>
-                            <td>{props.responseData.main.temp_min}</td>
+                            <td>{data.minTemp}</td>
                         </tr>
                         <tr>
                             <td>Temperature (Max)</td>
-                            <td>{props.responseData.main.temp_max}</td>
+                            <td>{data.maxTemp}</td>
                         </tr>
                         <tr>
                             <td>Conditions</td>
-                            <td>{props.responseData.weather[0].description}</td>
+                            <td>{data.conditions}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        )
+        );
+    } else {
+        return null;
     }
-    return null
 }
-  
-export default ZipResponse
+
+Weather.propTypes = {
+    clearResponse: PropTypes.func.isRequired,
+    data: PropTypes.shape({
+        conditions: PropTypes.string,
+        humidity: PropTypes.string,
+        name: PropTypes.string,
+        pressure: PropTypes.string,
+        maxTemp: PropTypes.number,
+        minTemp: PropTypes.number,
+        temp: PropTypes.number,
+    }),
+    error: PropTypes.string,
+};
+
+export default Weather;
