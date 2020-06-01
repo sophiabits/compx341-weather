@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 function QueryInput(props) {
     const [validationError, setValidationError] = useState(null);
 
-    const validate = (event) => {
+    const handleKeyPress = (event) => {
+        if (event.key !== 'Enter') return;
+
         const { validator, onChange } = props;
         if (typeof validator === 'function') {
             const validationError = validator(event.target.value);
@@ -22,7 +24,7 @@ function QueryInput(props) {
         <div className="col-sm-4">
             <div className="row">
                 <div className="col-sm-10">
-                    <style jsx="true">{`
+                    <style jsx>{`
                         .form-control::-webkit-input-placeholder {
                             color: #ddd;
                         }
@@ -38,11 +40,7 @@ function QueryInput(props) {
                         placeholder={props.placeholder}
                         spellCheck={false}
                         type="text"
-                        onKeyPress={(event) => {
-                            if (event.key === 'Enter') {
-                                validate(event);
-                            }
-                        }}
+                        onKeyPress={handleKeyPress}
                     />
                 </div>
             </div>
