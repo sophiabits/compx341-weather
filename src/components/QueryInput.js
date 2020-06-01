@@ -32,7 +32,7 @@ function QueryInput(props) {
                         aria-label="Search"
                         autoCorrect="off"
                         autoFocus
-                        className="form-control"
+                        className="form-control form-control-lg"
                         id="usr"
                         placeholder={props.placeholder}
                         spellCheck={false}
