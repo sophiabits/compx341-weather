@@ -24,7 +24,7 @@ function QueryInput(props) {
         <div className="col-sm-4">
             <div className="row">
                 <div className="col-sm-10">
-                    <style jsx>{`
+                    <style jsx="true">{`
                         .form-control::-webkit-input-placeholder {
                             color: #ddd;
                         }
