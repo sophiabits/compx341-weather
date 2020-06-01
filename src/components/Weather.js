@@ -7,46 +7,42 @@ function Weather(props) {
     if (error !== null) {
         setTimeout(clearResponse, 20000);
         return (
-            <div className="col-sm-8">
-                <div className="text-danger">{error}</div>
-            </div>
+            <div className="text-danger">{error}</div>
         );
     } else if (data !== null) {
         return (
-            <div className="col-sm-8">
-                <table className="table table-info table-hover">
-                    <tbody>
-                        <tr>
-                            <td>City</td>
-                            <td>{data.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Temperature</td>
-                            <td>{data.temp}</td>
-                        </tr>
-                        <tr>
-                            <td>Pressure</td>
-                            <td>{data.pressure}</td>
-                        </tr>
-                        <tr>
-                            <td>Humidity</td>
-                            <td>{data.humidity}</td>
-                        </tr>
-                        <tr>
-                            <td>Temperature (Min)</td>
-                            <td>{data.minTemp}</td>
-                        </tr>
-                        <tr>
-                            <td>Temperature (Max)</td>
-                            <td>{data.maxTemp}</td>
-                        </tr>
-                        <tr>
-                            <td>Conditions</td>
-                            <td>{data.conditions}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table className="table table-info table-hover">
+                <tbody>
+                    <tr>
+                        <td>City</td>
+                        <td>{data.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Temperature</td>
+                        <td>{data.temp}</td>
+                    </tr>
+                    <tr>
+                        <td>Pressure</td>
+                        <td>{data.pressure}</td>
+                    </tr>
+                    <tr>
+                        <td>Humidity</td>
+                        <td>{data.humidity}</td>
+                    </tr>
+                    <tr>
+                        <td>Temperature (Min)</td>
+                        <td>{data.minTemp}</td>
+                    </tr>
+                    <tr>
+                        <td>Temperature (Max)</td>
+                        <td>{data.maxTemp}</td>
+                    </tr>
+                    <tr>
+                        <td>Conditions</td>
+                        <td>{data.conditions}</td>
+                    </tr>
+                </tbody>
+            </table>
         );
     } else {
         return null;

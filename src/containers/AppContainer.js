@@ -35,7 +35,9 @@ function AppContainer(props) {
             </div>
             <div className="row mt-4">
                 <div className="col-sm-2"></div>
-                <Weather {...responseData} clearResponse={clearResponse}/>
+                <div className="col-sm-8">
+                    <Weather {...responseData} clearResponse={clearResponse}/>
+                </div>
                 <div className="col-sm-2"></div>
             </div>
         </div>
