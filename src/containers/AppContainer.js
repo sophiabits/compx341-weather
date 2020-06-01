@@ -36,6 +36,11 @@ function AppContainer(props) {
             <div className="row mt-4">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-8">
+                    {loading && (
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    )}
                     <Weather {...responseData} clearResponse={clearResponse}/>
                 </div>
                 <div className="col-sm-2"></div>
