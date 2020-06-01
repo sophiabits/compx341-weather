@@ -31,6 +31,7 @@ function QueryInput(props) {
                     <input
                         aria-label="Search"
                         autoCorrect="off"
+                        autoFocus
                         className="form-control"
                         id="usr"
                         placeholder={props.placeholder}
@@ -41,7 +42,7 @@ function QueryInput(props) {
                                 validate(event);
                             }
                         }}
-                    ></input>
+                    />
                 </div>
             </div>
             <div className="pl-3 row">
