@@ -17,7 +17,7 @@ export default function useWeather(config = {}) {
             loading: true,
         });
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${accessKey}&units=metric&q=${cityName},nz`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${accessKey}&units=metric&q=${encodeURIComponent(cityName)},nz`)
             .then((res) => res.json())
             .then((res) => {
                 setState({
