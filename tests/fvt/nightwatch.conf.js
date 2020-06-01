@@ -1,7 +1,6 @@
-
-if(!process.env.APP_URL) {
-    console.log('APP_URL environment variable not defined');
-    process.exit(1);
+if (!process.env.APP_URL) {
+  console.log('APP_URL environment variable not defined');
+  process.exit(1);
 }
 
 module.exports = {
@@ -12,10 +11,10 @@ module.exports = {
     'tests/fvt/nightwatch-pages',
   ],
 
-  webdriver : {
-    "start_process": true,
-    "server_path": "node_modules/.bin/chromedriver",
-    "port": 9515
+  webdriver: {
+    start_process: true,
+    server_path: 'node_modules/.bin/chromedriver',
+    port: 9515,
   },
 
   live_output: true,
@@ -30,31 +29,31 @@ module.exports = {
         enabled: true,
         on_failure: true,
         on_error: true,
-        path: './screenshots'
+        path: './screenshots',
       },
       desiredCapabilities: {
         browserName: 'chrome',
         'goog:chromeOptions': {
-          "args": [
-            "--headless",
-            "--no-sandbox",
-            "--disable-gpu"
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu',
           ],
           w3c: false,
-          prefs: { 'profile.managed_default_content_settings.notifications': 1 }
+          prefs: { 'profile.managed_default_content_settings.notifications': 1 },
         },
         loggingPrefs: {
           browser: 'ALL',
           client: 'ALL',
           driver: 'ALL',
-          server: 'ALL'
+          server: 'ALL',
         },
-        extendedDebugging: true
+        extendedDebugging: true,
       },
       globals: {
         waitForConditionTimeout: 10000, // Sometimes internet is slow so wait.
         asyncHookTimeout: 10000, // Default is 10000 which often causes a fail on startup.
-        abortOnFailure: true
+        abortOnFailure: true,
       },
 
       chrome: {
@@ -62,8 +61,8 @@ module.exports = {
           browserName: 'chrome',
           platform: 'macOS 10.13',
           version: '65.0',
-          chromedriverVersion: '2.36'
-        }
+          chromedriverVersion: '2.36',
+        },
       },
 
       phantomjs: {
@@ -71,14 +70,13 @@ module.exports = {
           browserName: 'phantomjs',
           javascriptEnabled: true,
           acceptSslCerts: true,
-          'phantomjs.binary.path':
-          'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs'
-        }
+          'phantomjs.binary.path': 'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs',
+        },
       },
 
       debug: {
-        silent: false
-      }
-    }
-  }
+        silent: false,
+      },
+    },
+  },
 };
