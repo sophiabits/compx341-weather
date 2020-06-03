@@ -2,26 +2,43 @@ module.exports = {
     '@disabled': false,  // This will prevent the test module from running.
 
     after: (browser, done) => {
-      console.log('After called');
+      // console.log('After called');
       browser
         .closeWindow()
         .end(done);
+    },
+
+    'DemoDOI - input is automatically focused on page load': async (browser) => {
+      const demodoi = browser.page.demodoi();
+      await demodoi.navigate().waitForElementVisible('@inputText');
+
+      // eslint-disable-next-line no-unused-expressions
+      demodoi.expect.element('@inputText').to.be.active;
     },
 
     'Navigate to the DemoDOI - valid city name': async (browser) => {
       const demodoi = browser.page.demodoi();
       const { cityName } = demodoi.section;
 
-      await demodoi.navigate().waitForElementVisible('@inputText');
+      const cases = [
+        // [entered_text, displayed_text]
+        ['hamilton', 'Hamilton'],
+        ['weLLington', 'Wellington'],
+        ['Auckland', 'Auckland'],
+      ];
 
-      await demodoi.setValue('@inputText', [
-        'hamilton',
-        browser.Keys.ENTER
-      ]);
+      for (let [input, displayed] of cases) {
+        await demodoi.navigate().waitForElementVisible('@inputText');
 
-      await demodoi.waitForElementVisible('@table');
+        await demodoi.setValue('@inputText', [
+          input,
+          browser.Keys.ENTER
+        ]);
 
-      cityName.expect.element('@firstApp').text.to.equal('Hamilton');
+        await demodoi.waitForElementVisible('@table');
+
+        cityName.expect.element('@firstApp').text.to.equal(displayed);
+      }
     },
 
     'Navigate to the DemoDOI - invalid city name': async (browser) => {
