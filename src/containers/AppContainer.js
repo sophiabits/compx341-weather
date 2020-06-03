@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { OPENWEATHERMAP_KEY } from '../config';
+
 import QueryInput from '../components/QueryInput';
 import Weather from '../components/Weather';
 
@@ -8,24 +10,24 @@ import validateCityName from '../lib/validateCityName';
 
 function AppContainer(props) {
     const weather = useWeather({
-        accessKey: '6b7b471967dd0851d0010cdecf28f829',
+        accessKey: OPENWEATHERMAP_KEY,
     });
     const { loading } = weather.state;
 
     return (
-        <div>
+        <div className="container">
             <div className="row mt-4">
-                <div className="col-sm-4"></div>
+                <div className="col-sm-4" />
                 <QueryInput
                     disabled={loading}
                     placeholder="City name (e.g. Hamilton)"
                     validator={validateCityName}
                     onChange={weather.search}
                 />
-                <div className="col-sm-4"></div>
+                <div className="col-sm-4" />
             </div>
             <div className="row mt-4">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2" />
                 <div className="col-sm-8">
                     {loading && (
                         <div class="spinner-grow" role="status">
@@ -34,7 +36,7 @@ function AppContainer(props) {
                     )}
                     <Weather {...weather.state} clearResponse={weather.reset}/>
                 </div>
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2" />
             </div>
         </div>
     );

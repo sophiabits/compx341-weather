@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Timeout from './Timeout';
+
 function Weather(props) {
     const { data, error, clearResponse } = props;
 
     if (error !== null) {
-        setTimeout(clearResponse, 20000);
         return (
-            <div className="text-danger">{error}</div>
+            <React.Fragment>
+                <div className="text-danger">{error}</div>
+                <Timeout callback={clearResponse} delay={20000} />
+            </React.Fragment>
         );
     } else if (data !== null) {
         return (
