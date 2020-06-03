@@ -1,6 +1,8 @@
 import fetch from 'isomorphic-unfetch'
 import { useState } from 'react';
 
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+
 const INITIAL_WEATHER_STATE = {
     data: null,
     error: null,
@@ -11,13 +13,23 @@ export default function useWeather(config = {}) {
     const { accessKey } = config;
     const [state, setState] = useState(INITIAL_WEATHER_STATE);
 
-    function search(cityName) {
+    function search(params) {
         setState({
             ...state,
             loading: true,
         });
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${accessKey}&units=metric&q=${encodeURIComponent(cityName)},nz`)
+        if (params.q) {
+            params.q += ',nz';
+        }
+
+        const endpointUrl = makeQueryUrl(BASE_URL, {
+            ...params,
+            appid: accessKey,
+            units: 'metric',
+        });
+
+        fetch(endpointUrl)
             .then((res) => res.json())
             .then((res) => {
                 setState({
@@ -60,6 +72,29 @@ function handleWeatherResponse(response) {
             temp: response.main.temp,
             maxTemp: response.main.temp_max,
             minTemp: response.main.temp_min,
+
+            latitude: response.coord.lat,
+            longitude: response.coord.lon,
         },
     };
+}
+
+/**
+ * Stringifies a URL with the given params applied as a query string.
+ * Escapes param values so that they cannot contain invalid characters.
+ * Note that this will fail in the case that `url` is a pathless url without
+ * a trailing slash (e.g. "microsoft.com" instead of "microsoft.com/");
+ *
+ * @example
+ * makeQueryUrl('google.com/', { q: 'value' }) === 'google.com/?q=value'
+ *
+ * @param {string} url
+ * @param {{ [key: string]: any }} params
+ */
+function makeQueryUrl(url, params) {
+    const qs = Object.entries(params).reduce((acc, [key, val]) => [
+        ...acc,
+        `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
+    ], []).join('&');
+    return `${url}?${qs}`;
 }
