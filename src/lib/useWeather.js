@@ -9,6 +9,7 @@ const INITIAL_WEATHER_STATE = {
     loading: false,
 };
 
+/** Abstracts away the logic for fetching weather. */
 export default function useWeather(config = {}) {
     const { accessKey } = config;
     const [state, setState] = useState(INITIAL_WEATHER_STATE);
