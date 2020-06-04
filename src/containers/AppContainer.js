@@ -54,7 +54,7 @@ function AppContainer(props) {
                 <div className="col-sm-2" />
             </div>
             <div className="row mt-4">
-                <div className="col-sm-12">
+                <div className="col-sm-12" data-testid="map_container">
                     {renderMap(weather.state.data, handleClickMap)}
                 </div>
             </div>

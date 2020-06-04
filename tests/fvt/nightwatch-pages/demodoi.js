@@ -1,6 +1,9 @@
 module.exports = {
   url: process.env.APP_URL,
   elements: {
+    map: {
+      selector: '[data-testid=map_container] > div',
+    },
     inputText: {
       selector: 'input[type=text]'
     },

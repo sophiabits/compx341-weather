@@ -16,6 +16,14 @@ module.exports = {
       demodoi.expect.element('@inputText').to.be.active;
     },
 
+    'DemoDOI - contains a google maps instance, and clicking it fires a request to the weather API': async (browser) => {
+      const demodoi = browser.page.demodoi();
+
+      await browser.click('@map');
+
+      await demodoi.waitForElementVisible('@table');
+    },
+
     'Navigate to the DemoDOI - valid city name': async (browser) => {
       const demodoi = browser.page.demodoi();
       const { cityName } = demodoi.section;
