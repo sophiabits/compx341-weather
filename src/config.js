@@ -1,2 +1,3 @@
 export const GOOGLE_MAPS_KEY = 'AIzaSyCFnoWz0RPdxrl0kAO9D0BXoZAVAmtCiuY';
 export const OPENWEATHERMAP_KEY = '6b7b471967dd0851d0010cdecf28f829';
+export const RESTDB_KEY = '5ed8c6594e6043315b0af712';

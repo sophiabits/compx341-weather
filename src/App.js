@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import AppHeader from './components/AppHeader';
 import AppContainer from './containers/AppContainer';

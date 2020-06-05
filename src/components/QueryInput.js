@@ -1,12 +1,25 @@
-import cx from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { Typeahead, TypeaheadInputSingle } from 'react-bootstrap-typeahead';
 
 function QueryInput(props) {
+    const inputRef = useRef(null);
     const [validationError, setValidationError] = useState(null);
 
-    const handleKeyPress = (event) => {
-        if (event.key !== 'Enter') return;
+    const { disabled, invalid, options, placeholder, id } = props;
+
+    const handleChange = ([value]) => {
+        // assume that anything which came from the dropdown will be valid
+        if (value) {
+            setValidationError(null);
+            props.onChange(value);
+        }
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key !== 'Enter') {
+            return;
+        }
 
         const { validator, onChange } = props;
         if (typeof validator === 'function') {
@@ -23,6 +36,9 @@ function QueryInput(props) {
 
     return (
         <div className="col-sm-4">
+            <div className="pl-3 row">
+                <div className="text-danger small">{validationError}</div>
+            </div>
             <div className="row">
                 <div className="col-sm-10">
                     <style jsx="true">{`
@@ -31,25 +47,32 @@ function QueryInput(props) {
                         }
                     `}
                     </style>
-                    <input
-                        aria-label="Search"
-                        autoCorrect="off"
+
+                    <Typeahead
+                        ref={inputRef}
+                        id={`${id}-menu`}
                         autoFocus
-                        className={cx(
-                            'form-control form-control-lg',
-                            validationError !== null && 'is-invalid'
+                        options={options}
+
+                        renderInput={(props) => (
+                            <TypeaheadInputSingle
+                                {...props}
+                                autoComplete="off"
+                                autoCorrect="off"
+                                aria-label="Search"
+                                disabled={disabled}
+                                id={id}
+                                isInvalid={validationError !== null || invalid}
+                                placeholder={placeholder}
+                                spellCheck={false}
+                                type="text"
+                            />
                         )}
-                        disabled={props.disabled}
-                        id="usr"
-                        placeholder={props.placeholder}
-                        spellCheck={false}
-                        type="text"
-                        onKeyPress={handleKeyPress}
+
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
                     />
                 </div>
-            </div>
-            <div className="pl-3 row">
-                <div className="text-danger small">{validationError}</div>
             </div>
         </div>
     );
@@ -57,6 +80,10 @@ function QueryInput(props) {
 
 QueryInput.propTypes = {
     disabled: PropTypes.bool,
+    id: PropTypes.string.isRequired,
+    invalid: PropTypes.bool,
+    /** Drop down options to show to the user. */
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
     placeholder: PropTypes.string,
     validator: PropTypes.func,
     onChange: PropTypes.func.isRequired,

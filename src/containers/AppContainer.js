@@ -1,5 +1,5 @@
 import { Marker } from 'react-google-maps';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { GOOGLE_MAPS_KEY, OPENWEATHERMAP_KEY } from '../config';
 
@@ -7,14 +7,24 @@ import Map from '../components/Map';
 import QueryInput from '../components/QueryInput';
 import Weather from '../components/Weather';
 
+import useDb from '../lib/useDb';
 import useWeather from '../lib/useWeather';
 import validateCityName from '../lib/validateCityName';
 
 function AppContainer(props) {
+    const [searches, addSearch] = useDb();
     const weather = useWeather({
         accessKey: OPENWEATHERMAP_KEY,
     });
     const { loading } = weather.state;
+
+    useEffect(() => {
+        const { data } = weather.state;
+        if (data !== null) {
+            // Record the searched city
+            addSearch(data.name);
+        }
+    }, [addSearch, weather.state]);
 
     const handleClickMap = (event) => {
         weather.search({
@@ -35,6 +45,9 @@ function AppContainer(props) {
                 <div className="col-sm-4" />
                 <QueryInput
                     disabled={loading}
+                    id="usr"
+                    invalid={weather.state.error !== null}
+                    options={searches}
                     placeholder="City name (e.g. Hamilton)"
                     validator={validateCityName}
                     onChange={handleQueryChange}
@@ -45,8 +58,8 @@ function AppContainer(props) {
                 <div className="col-sm-2" />
                 <div className="col-sm-8">
                     {loading && (
-                        <div class="spinner-grow" role="status">
-                            <span class="sr-only">Loading...</span>
+                        <div className="spinner-grow" role="status">
+                            <span className="sr-only">Loading...</span>
                         </div>
                     )}
                     <Weather {...weather.state} clearResponse={weather.reset}/>
